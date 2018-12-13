@@ -22,7 +22,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
     pages.push(new HtmlWebpackPlugin({
       filename: `views/${page}.html`, // 生成的html文件的路径（基于出口配置里的path）
       template: path.resolve(__dirname, `../src/page/${page}.html`), // 参考的html模板文件
-      chunks: [page, 'commons', 'vendors', 'styles', 'manifest'], // 配置生成的html引入的公共代码块 引入顺序从右至左
+      chunks: [page, '[name]', 'commons', 'vendors', 'manifest'], // 配置生成的html引入的公共代码块 引入顺序从右至左
       favicon: path.resolve(__dirname, '../src/img/favicon.ico'), // 配置每个html页面的favicon
       minify: {// 配置生成的html文件的压缩配置
         collapseWhitespace: true,
@@ -43,11 +43,14 @@ module.exports = {
   entry: Entries,
   // 启用 sourceMap
   devtool: 'cheap-module-source-map',
+  // mode为none表示这是默认配置
+  mode: 'none',
   // 配置文件出口
   output: {
     // 将打包好的js输出到public（静态资源目录）下的js文件夹中
     filename: 'public/js/[name].bundle.[hash].js',
-    path: path.resolve(__dirname, '../dist')// 输出目录，所有文件的输出路径都基于此路径之上(需要绝对路径)
+    path: path.resolve(__dirname, '../dist'), // 输出目录，所有文件的输出路径都基于此路径之上(需要绝对路径)
+    publicPath: '../'
   },
   // 省略文件后缀
   resolve: {
@@ -61,7 +64,7 @@ module.exports = {
         test: require.resolve('jquery'), // 此loader配置项的目标是NPM中的jquery
         loader: 'expose-loader?$!expose-loader?jQuery' // 先把jQuery对象声明成为全局变量`jQuery`，再通过管道进一步又声明成为全局变量`$`
       },
-      // 处理html
+      // 处理html中的图片，考虑到node使用模板的情况所以不能使用html-loader
       {
         test: /\.html$/,
         use: [{
@@ -120,5 +123,10 @@ module.exports = {
       'window.$': 'jquery',
       'window.jQuery': 'jquery'
     })
-  ]
+  ],
+  // 配置webpack执行相关
+  performance: {
+    maxEntrypointSize: 1000000, // 最大入口文件大小1M
+    maxAssetSize: 1000000 // 最大资源文件大小1M
+  }
 }
