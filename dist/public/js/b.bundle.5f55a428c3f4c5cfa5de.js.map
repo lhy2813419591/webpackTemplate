@@ -1,1 +1,0 @@
-{"version":3,"file":"public/js/b.bundle.5f55a428c3f4c5cfa5de.js","sources":["webpack:///./src/js/b.js"],"sourcesContent":["import '../css/b.css'\r\nimport 'bootstrap/dist/css/bootstrap.min.css'\r\n\r\nconsole.log($)"],"mappings":"AAAA","sourceRoot":""}
