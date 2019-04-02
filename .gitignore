@@ -68,7 +68,6 @@ typings/
 # next.js build output
 .next
 
-package.json
 node_modules/.bin/
 node_modules/@webassemblyjs/ast/LICENSE
 node_modules/@webassemblyjs/ast/README.md
