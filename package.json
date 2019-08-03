@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=dev webpack-dev-server --color",
+    "dev": "cross-env NODE_ENV=prod webpack -p && cross-env NODE_ENV=dev webpack-dev-server --color",
     "prod": "cross-env NODE_ENV=prod webpack -p",
     "lint": "eslint --ext .js --ext .jsx --ext .vue src/",
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
